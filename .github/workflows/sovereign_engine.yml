@@ -1,0 +1,11 @@
+name: Sovereign Build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: System Pulse
+        run: echo "Vanguard Engine is Online for Mohammad"
