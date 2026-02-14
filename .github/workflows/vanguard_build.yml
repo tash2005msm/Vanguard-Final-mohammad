@@ -1,27 +1,15 @@
 name: Vanguard Cloud Build
-on: [push]
+on: 
+  push:
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Build APK (Fast Mode)
+      - name: Start Build Process
         run: |
-          sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-          pip3 install --user --upgrade buildozer
-          buildozer init
-          sed -i 's/package.name = myapp/package.name = vanguard_mohammad/' buildozer.spec
-          sed -i 's/# android.permissions = INTERNET/android.permissions = INTERNET/' buildozer.spec
-          yes | buildozer android debug
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: Vanguard-App-Package
-          path: bin/*.apk
+          echo "Building for Mohammad..."
+          # هذا أمر وهمي سريع للتأكد من أن السيرفر يعمل
+          echo "Success"
