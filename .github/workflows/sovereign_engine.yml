@@ -5,5 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build Heartbeat
-        run: echo "Vanguard Engine is Online for Mohammad"
+      - name: Install Android Build Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip3 install --user --upgrade buildozer
+      - name: Initialize and Build APK
+        run: |
+          buildozer init
+          sed -i 's/package.name = myapp/package.name = vanguard_mohammad/' buildozer.spec
+          sed -i 's/# android.permissions = INTERNET/android.permissions = INTERNET/' buildozer.spec
+          yes | buildozer android debug
+      - name: Upload Finished APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mohammad-Vanguard-App
+          path: bin/*.apk
